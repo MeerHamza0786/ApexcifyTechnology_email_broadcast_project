@@ -1,0 +1,106 @@
+{% extends "base.html" %}
+
+{% block title %}Recipients · {{ app_name }}{% endblock %}
+
+{% block content %}
+<section class="section-header">
+    <div>
+        <p class="eyebrow">Mailing list</p>
+        <h1 class="section-title">Recipients</h1>
+        <p class="section-subtitle">
+            Maintain the list of inboxes that will receive your broadcast. Paste multiple emails at once or
+            prune the list below.
+        </p>
+    </div>
+    <div class="header-actions">
+        <button class="btn btn-outline" id="copyRecipients">Copy list</button>
+        <form method="post" action="{{ url_for('clear_recipients') }}" onsubmit="return confirm('Remove all recipients?');">
+            <button class="btn btn-secondary" type="submit" {% if not recipients %}disabled{% endif %}>
+                Clear all
+            </button>
+        </form>
+    </div>
+</section>
+
+<section class="recipient-grid">
+    <article class="card">
+        <h2>Add recipients</h2>
+        <p class="section-subtitle">Separate addresses with commas or new lines.</p>
+        <form method="post" class="stacked-form" novalidate>
+            <div class="form-group">
+                <label class="form-label" for="addresses">Email addresses</label>
+                <textarea
+                    id="addresses"
+                    name="addresses"
+                    rows="5"
+                    class="textarea-control"
+                    placeholder="alpha@example.com, bravo@example.com"
+                    required
+                >{{ form.addresses }}</textarea>
+                {% if form.errors.get("addresses") %}
+                    <div class="form-error">{{ form.errors["addresses"] }}</div>
+                {% endif %}
+            </div>
+            <div class="form-actions">
+                <button type="submit" class="btn btn-primary">
+                    <span class="btn-icon">+</span>
+                    Add recipients
+                </button>
+            </div>
+        </form>
+    </article>
+
+    <article class="card summary-card">
+        <h2>List summary</h2>
+        <ul class="summary-list">
+            <li>
+                <span>Total recipients</span>
+                <strong>{{ total_count }}</strong>
+            </li>
+            <li>
+                <span>Last refresh</span>
+                <strong>{{ current_year }}</strong>
+            </li>
+        </ul>
+        <p class="section-subtitle">
+            Entries are persisted to <code>app/core/recipients.py</code>. Keep the list healthy to protect deliverability.
+        </p>
+    </article>
+</section>
+
+<section class="card">
+    <header class="card-header">
+        <div>
+            <h2>Directory</h2>
+            <p class="section-subtitle">Showing {{ recipients|length }} recipient{{ recipients|length != 1 and 's' or '' }}</p>
+        </div>
+    </header>
+    {% if recipients %}
+        <ul class="recipients-table">
+            {% for recipient in recipients %}
+                <li class="recipient-row">
+                    <div class="recipient-email">{{ recipient }}</div>
+                    <form method="post" action="{{ url_for('delete_recipient', index=loop.index0) }}" onsubmit="return confirm('Remove {{ recipient }}?');">
+                        <button class="btn btn-text" type="submit">Remove</button>
+                    </form>
+                </li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <div class="empty-state">
+            <div class="empty-icon">📭</div>
+            <p>No recipients yet. Add at least one address to queue broadcasts.</p>
+        </div>
+    {% endif %}
+</section>
+
+<script>
+    document.getElementById("copyRecipients")?.addEventListener("click", () => {
+        const recipients = {{ recipients | tojson }};
+        navigator.clipboard.writeText(recipients.join("\n")).then(() => {
+            alert("Recipient list copied to clipboard.");
+        });
+    });
+</script>
+{% endblock %}
+

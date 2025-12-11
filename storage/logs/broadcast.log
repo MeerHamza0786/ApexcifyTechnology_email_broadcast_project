@@ -1,0 +1,403 @@
+2025-11-21 20:02:57 | INFO | Starting broadcast to 20 recipients (concurrency=50)
+2025-11-21 20:03:00 | ERROR | Broadcast failed
+Traceback (most recent call last):
+  File "E:\email_broadcast_project\app\ui\app.py", line 226, in runner
+    self._run_broadcast(message)
+    ~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "E:\email_broadcast_project\app\ui\app.py", line 248, in _run_broadcast
+    self.mailer.send_blocking(
+    ~~~~~~~~~~~~~~~~~~~~~~~~~^
+        self.recipients,
+        ^^^^^^^^^^^^^^^^
+    ...<2 lines>...
+        progress_hook=progress_hook,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "E:\email_broadcast_project\app\services\mailer.py", line 77, in send_blocking
+    asyncio.run(
+    ~~~~~~~~~~~^
+        self.send_async(
+        ^^^^^^^^^^^^^^^^
+            recipients, message, concurrency=concurrency, progress_hook=progress_hook
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        )
+        ^
+    )
+    ^
+  File "C:\Python313\Lib\asyncio\runners.py", line 195, in run
+    return runner.run(main)
+           ~~~~~~~~~~^^^^^^
+  File "C:\Python313\Lib\asyncio\runners.py", line 118, in run
+    return self._loop.run_until_complete(task)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^
+  File "C:\Python313\Lib\asyncio\base_events.py", line 725, in run_until_complete
+    return future.result()
+           ~~~~~~~~~~~~~^^
+  File "E:\email_broadcast_project\app\services\mailer.py", line 66, in send_async
+    await asyncio.gather(*(worker(address) for address in recipients))
+  File "E:\email_broadcast_project\app\services\mailer.py", line 62, in worker
+    await self._send_one(address, message)
+  File "E:\email_broadcast_project\app\services\mailer.py", line 33, in _send_one
+    await aiosmtplib.send(
+    ...<7 lines>...
+    )
+  File "C:\Users\shafi laptop\AppData\Roaming\Python\Python313\site-packages\aiosmtplib\api.py", line 124, in send
+    async with client:
+               ^^^^^^
+  File "C:\Users\shafi laptop\AppData\Roaming\Python\Python313\site-packages\aiosmtplib\smtp.py", line 178, in __aenter__
+    await self.connect()
+  File "C:\Users\shafi laptop\AppData\Roaming\Python\Python313\site-packages\aiosmtplib\smtp.py", line 453, in connect
+    raise exc
+  File "C:\Users\shafi laptop\AppData\Roaming\Python\Python313\site-packages\aiosmtplib\smtp.py", line 450, in connect
+    await self._maybe_login_on_connect()
+  File "C:\Users\shafi laptop\AppData\Roaming\Python\Python313\site-packages\aiosmtplib\smtp.py", line 555, in _maybe_login_on_connect
+    await self.login(self._login_username, login_password)
+  File "C:\Users\shafi laptop\AppData\Roaming\Python\Python313\site-packages\aiosmtplib\smtp.py", line 1111, in login
+    raise exception or SMTPException("No suitable authentication method found.")
+  File "C:\Users\shafi laptop\AppData\Roaming\Python\Python313\site-packages\aiosmtplib\smtp.py", line 1103, in login
+    response = await auth_method(username, password, timeout=timeout)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\shafi laptop\AppData\Roaming\Python\Python313\site-packages\aiosmtplib\smtp.py", line 1227, in auth_login
+    raise SMTPAuthenticationError(response.code, response.message)
+aiosmtplib.errors.SMTPAuthenticationError: (535, '5.7.8 Username and Password not accepted. For more information, go to\n5.7.8  https://support.google.com/mail/?p=BadCredentials ffacd0b85a97d-42cb7fa3592sm11060860f8f.21 - gsmtp')
+2025-11-21 20:10:58 | INFO | Starting broadcast to 20 recipients (concurrency=50)
+2025-11-21 20:11:02 | ERROR | Broadcast failed
+Traceback (most recent call last):
+  File "E:\email_broadcast_project\app\ui\app.py", line 226, in runner
+    self._run_broadcast(message)
+    ~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "E:\email_broadcast_project\app\ui\app.py", line 248, in _run_broadcast
+    self.mailer.send_blocking(
+    ~~~~~~~~~~~~~~~~~~~~~~~~~^
+        self.recipients,
+        ^^^^^^^^^^^^^^^^
+    ...<2 lines>...
+        progress_hook=progress_hook,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "E:\email_broadcast_project\app\services\mailer.py", line 77, in send_blocking
+    asyncio.run(
+    ~~~~~~~~~~~^
+        self.send_async(
+        ^^^^^^^^^^^^^^^^
+            recipients, message, concurrency=concurrency, progress_hook=progress_hook
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        )
+        ^
+    )
+    ^
+  File "C:\Python313\Lib\asyncio\runners.py", line 195, in run
+    return runner.run(main)
+           ~~~~~~~~~~^^^^^^
+  File "C:\Python313\Lib\asyncio\runners.py", line 118, in run
+    return self._loop.run_until_complete(task)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^
+  File "C:\Python313\Lib\asyncio\base_events.py", line 725, in run_until_complete
+    return future.result()
+           ~~~~~~~~~~~~~^^
+  File "E:\email_broadcast_project\app\services\mailer.py", line 66, in send_async
+    await asyncio.gather(*(worker(address) for address in recipients))
+  File "E:\email_broadcast_project\app\services\mailer.py", line 62, in worker
+    await self._send_one(address, message)
+  File "E:\email_broadcast_project\app\services\mailer.py", line 33, in _send_one
+    await aiosmtplib.send(
+    ...<7 lines>...
+    )
+  File "C:\Users\shafi laptop\AppData\Roaming\Python\Python313\site-packages\aiosmtplib\api.py", line 124, in send
+    async with client:
+               ^^^^^^
+  File "C:\Users\shafi laptop\AppData\Roaming\Python\Python313\site-packages\aiosmtplib\smtp.py", line 178, in __aenter__
+    await self.connect()
+  File "C:\Users\shafi laptop\AppData\Roaming\Python\Python313\site-packages\aiosmtplib\smtp.py", line 453, in connect
+    raise exc
+  File "C:\Users\shafi laptop\AppData\Roaming\Python\Python313\site-packages\aiosmtplib\smtp.py", line 450, in connect
+    await self._maybe_login_on_connect()
+  File "C:\Users\shafi laptop\AppData\Roaming\Python\Python313\site-packages\aiosmtplib\smtp.py", line 555, in _maybe_login_on_connect
+    await self.login(self._login_username, login_password)
+  File "C:\Users\shafi laptop\AppData\Roaming\Python\Python313\site-packages\aiosmtplib\smtp.py", line 1111, in login
+    raise exception or SMTPException("No suitable authentication method found.")
+  File "C:\Users\shafi laptop\AppData\Roaming\Python\Python313\site-packages\aiosmtplib\smtp.py", line 1103, in login
+    response = await auth_method(username, password, timeout=timeout)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\shafi laptop\AppData\Roaming\Python\Python313\site-packages\aiosmtplib\smtp.py", line 1227, in auth_login
+    raise SMTPAuthenticationError(response.code, response.message)
+aiosmtplib.errors.SMTPAuthenticationError: (535, '5.7.8 Username and Password not accepted. For more information, go to\n5.7.8  https://support.google.com/mail/?p=BadCredentials ffacd0b85a97d-42cb7f2e454sm11791741f8f.2 - gsmtp')
+2025-11-21 20:12:03 | INFO | Starting broadcast to 20 recipients (concurrency=50)
+2025-11-21 20:12:06 | ERROR | Broadcast failed
+Traceback (most recent call last):
+  File "E:\email_broadcast_project\app\ui\app.py", line 226, in runner
+    self._run_broadcast(message)
+    ~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "E:\email_broadcast_project\app\ui\app.py", line 248, in _run_broadcast
+    self.mailer.send_blocking(
+    ~~~~~~~~~~~~~~~~~~~~~~~~~^
+        self.recipients,
+        ^^^^^^^^^^^^^^^^
+    ...<2 lines>...
+        progress_hook=progress_hook,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "E:\email_broadcast_project\app\services\mailer.py", line 77, in send_blocking
+    asyncio.run(
+    ~~~~~~~~~~~^
+        self.send_async(
+        ^^^^^^^^^^^^^^^^
+            recipients, message, concurrency=concurrency, progress_hook=progress_hook
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        )
+        ^
+    )
+    ^
+  File "C:\Python313\Lib\asyncio\runners.py", line 195, in run
+    return runner.run(main)
+           ~~~~~~~~~~^^^^^^
+  File "C:\Python313\Lib\asyncio\runners.py", line 118, in run
+    return self._loop.run_until_complete(task)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^
+  File "C:\Python313\Lib\asyncio\base_events.py", line 725, in run_until_complete
+    return future.result()
+           ~~~~~~~~~~~~~^^
+  File "E:\email_broadcast_project\app\services\mailer.py", line 66, in send_async
+    await asyncio.gather(*(worker(address) for address in recipients))
+  File "E:\email_broadcast_project\app\services\mailer.py", line 62, in worker
+    await self._send_one(address, message)
+  File "E:\email_broadcast_project\app\services\mailer.py", line 33, in _send_one
+    await aiosmtplib.send(
+    ...<7 lines>...
+    )
+  File "C:\Users\shafi laptop\AppData\Roaming\Python\Python313\site-packages\aiosmtplib\api.py", line 124, in send
+    async with client:
+               ^^^^^^
+  File "C:\Users\shafi laptop\AppData\Roaming\Python\Python313\site-packages\aiosmtplib\smtp.py", line 178, in __aenter__
+    await self.connect()
+  File "C:\Users\shafi laptop\AppData\Roaming\Python\Python313\site-packages\aiosmtplib\smtp.py", line 453, in connect
+    raise exc
+  File "C:\Users\shafi laptop\AppData\Roaming\Python\Python313\site-packages\aiosmtplib\smtp.py", line 450, in connect
+    await self._maybe_login_on_connect()
+  File "C:\Users\shafi laptop\AppData\Roaming\Python\Python313\site-packages\aiosmtplib\smtp.py", line 555, in _maybe_login_on_connect
+    await self.login(self._login_username, login_password)
+  File "C:\Users\shafi laptop\AppData\Roaming\Python\Python313\site-packages\aiosmtplib\smtp.py", line 1111, in login
+    raise exception or SMTPException("No suitable authentication method found.")
+  File "C:\Users\shafi laptop\AppData\Roaming\Python\Python313\site-packages\aiosmtplib\smtp.py", line 1103, in login
+    response = await auth_method(username, password, timeout=timeout)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\shafi laptop\AppData\Roaming\Python\Python313\site-packages\aiosmtplib\smtp.py", line 1227, in auth_login
+    raise SMTPAuthenticationError(response.code, response.message)
+aiosmtplib.errors.SMTPAuthenticationError: (535, '5.7.8 Username and Password not accepted. For more information, go to\n5.7.8  https://support.google.com/mail/?p=BadCredentials ffacd0b85a97d-42cb7fb8a29sm11712390f8f.30 - gsmtp')
+2025-11-21 20:42:33 | INFO | Starting broadcast to 20 recipients (concurrency=50)
+2025-11-21 20:42:36 | ERROR | Broadcast failed
+Traceback (most recent call last):
+  File "E:\email_broadcast_project\app\ui\app.py", line 226, in runner
+  File "E:\email_broadcast_project\app\ui\app.py", line 248, in _run_broadcast
+  File "E:\email_broadcast_project\app\services\mailer.py", line 77, in send_blocking
+    asyncio.run(
+    ~~~~~~~~~~~^
+        self.send_async(
+        ^^^^^^^^^^^^^^^^
+            recipients, message, concurrency=concurrency, progress_hook=progress_hook
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        )
+        ^
+    )
+    ^
+  File "C:\Python313\Lib\asyncio\runners.py", line 195, in run
+    return runner.run(main)
+           ~~~~~~~~~~^^^^^^
+  File "C:\Python313\Lib\asyncio\runners.py", line 118, in run
+    return self._loop.run_until_complete(task)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^
+  File "C:\Python313\Lib\asyncio\base_events.py", line 725, in run_until_complete
+    return future.result()
+           ~~~~~~~~~~~~~^^
+  File "E:\email_broadcast_project\app\services\mailer.py", line 66, in send_async
+    await asyncio.gather(*(worker(address) for address in recipients))
+  File "E:\email_broadcast_project\app\services\mailer.py", line 62, in worker
+    await self._send_one(address, message)
+  File "E:\email_broadcast_project\app\services\mailer.py", line 33, in _send_one
+    await aiosmtplib.send(
+    ...<7 lines>...
+    )
+  File "C:\Users\shafi laptop\AppData\Roaming\Python\Python313\site-packages\aiosmtplib\api.py", line 124, in send
+    async with client:
+               ^^^^^^
+  File "C:\Users\shafi laptop\AppData\Roaming\Python\Python313\site-packages\aiosmtplib\smtp.py", line 178, in __aenter__
+    await self.connect()
+  File "C:\Users\shafi laptop\AppData\Roaming\Python\Python313\site-packages\aiosmtplib\smtp.py", line 453, in connect
+    raise exc
+  File "C:\Users\shafi laptop\AppData\Roaming\Python\Python313\site-packages\aiosmtplib\smtp.py", line 450, in connect
+    await self._maybe_login_on_connect()
+  File "C:\Users\shafi laptop\AppData\Roaming\Python\Python313\site-packages\aiosmtplib\smtp.py", line 555, in _maybe_login_on_connect
+    await self.login(self._login_username, login_password)
+  File "C:\Users\shafi laptop\AppData\Roaming\Python\Python313\site-packages\aiosmtplib\smtp.py", line 1111, in login
+    raise exception or SMTPException("No suitable authentication method found.")
+  File "C:\Users\shafi laptop\AppData\Roaming\Python\Python313\site-packages\aiosmtplib\smtp.py", line 1103, in login
+    response = await auth_method(username, password, timeout=timeout)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\shafi laptop\AppData\Roaming\Python\Python313\site-packages\aiosmtplib\smtp.py", line 1227, in auth_login
+    raise SMTPAuthenticationError(response.code, response.message)
+aiosmtplib.errors.SMTPAuthenticationError: (535, '5.7.8 Username and Password not accepted. For more information, go to\n5.7.8  https://support.google.com/mail/?p=BadCredentials 5b1f17b1804b1-477bf1e872esm50033505e9.5 - gsmtp')
+2025-11-21 20:48:23 | INFO | Recipients persisted to app/core/recipients.py
+2025-11-21 20:48:36 | INFO | Starting broadcast to 21 recipients (concurrency=50)
+2025-11-21 20:48:39 | INFO | Broadcast failed: (535, '5.7.8 Username and Password not accepted. For more information, go to\n5.7.8  https://support.google.com/mail/?p=BadCredentials ffacd0b85a97d-42cb7fb9022sm11557248f8f.36 - gsmtp')
+2025-11-21 20:49:20 | INFO | Starting broadcast to 21 recipients (concurrency=50)
+2025-11-21 20:49:23 | INFO | Broadcast failed: (535, '5.7.8 Username and Password not accepted. For more information, go to\n5.7.8  https://support.google.com/mail/?p=BadCredentials ffacd0b85a97d-42cb7fa35b7sm11958495f8f.20 - gsmtp')
+2025-11-21 21:35:05 | INFO | Starting broadcast to 21 recipients (concurrency=50)
+2025-11-21 21:35:07 | INFO | Broadcast failed: (535, '5.7.8 Username and Password not accepted. For more information, go to\n5.7.8  https://support.google.com/mail/?p=BadCredentials 5b1f17b1804b1-477bf1df334sm51932085e9.3 - gsmtp')
+2025-11-23 10:59:28 | INFO | Failed login attempt from 127.0.0.1 (user: Meer Hamza)
+2025-11-23 11:00:23 | INFO | Failed login attempt from 127.0.0.1 (user: gumeer6@gmail.com)
+2025-11-23 11:00:36 | INFO | Failed login attempt from 127.0.0.1 (user: gumeer6@gmail.com)
+2025-11-23 11:01:13 | INFO | Failed login attempt from 127.0.0.1 (user: gumeer6@gmail.com)
+2025-11-23 11:01:34 | INFO | Failed login attempt from 127.0.0.1 (user: gumeer6@gmail.com)
+2025-11-23 11:02:01 | INFO | Rate limited login attempt from 127.0.0.1
+2025-11-23 11:09:33 | INFO | Failed login attempt from 127.0.0.1 (user: gumeer6@gmail.com)
+2025-11-23 11:16:01 | INFO | Failed login attempt from 127.0.0.1 (user: gumeer6@gmail.com)
+2025-11-23 11:19:43 | INFO | Failed login attempt from 127.0.0.1 (user: admin)
+2025-11-23 11:22:48 | INFO | Login attempt - Username: 'admin', Expected: 'admin', Match: True
+2025-11-23 11:22:48 | INFO | Password length: 32, Expected length: 8, Match: False
+2025-11-23 11:22:48 | INFO | Failed login attempt from 127.0.0.1 (user: admin)
+2025-11-23 11:25:58 | INFO | Login attempt - Username: 'admin' (expected: 'admin'), Match: True
+2025-11-23 11:25:58 | INFO | Password provided length: 32, Expected length: 8, Match: False
+2025-11-23 11:25:58 | INFO | Failed login attempt from 127.0.0.1 (user: admin)
+2025-11-23 11:27:36 | INFO | Login attempt - Username: 'admin' (expected: 'admin'), Match: True
+2025-11-23 11:27:36 | INFO | Password provided length: 8, Expected length: 8, Match: False
+2025-11-23 11:27:36 | INFO | Failed login attempt from 127.0.0.1 (user: admin)
+2025-11-23 11:28:43 | INFO | Loaded admin credentials - Username: 'admin' (len: 5), Password: 'adm***' (len: 8)
+2025-11-23 11:28:55 | INFO | Loaded admin credentials - Username: 'admin' (len: 5), Password: 'adm***' (len: 8)
+2025-11-23 11:29:23 | INFO | Loaded admin credentials - Username: 'admin' (len: 5), Password: 'adm***' (len: 8)
+2025-11-23 11:29:41 | INFO | Loaded admin credentials - Username: 'admin' (len: 5), Password: 'adm***' (len: 8)
+2025-11-23 11:29:54 | INFO | Loaded admin credentials - Username: 'admin' (len: 5), Password: 'adm***' (len: 8)
+2025-11-23 11:30:23 | INFO | Loaded admin credentials - Username: 'admin' (len: 5), Password: 'adm***' (len: 8)
+2025-11-23 11:30:23 | INFO | Login attempt - Username: 'admin' (expected: 'admin'), Match: True
+2025-11-23 11:30:23 | INFO | Password provided: 'admin123' (length: 8)
+2025-11-23 11:30:23 | INFO | Password expected: 'admin123' (length: 8)
+2025-11-23 11:30:23 | INFO | Password match: True
+2025-11-23 11:30:23 | INFO | Password bytes comparison: True
+2025-11-23 11:30:23 | INFO | Successful login from 127.0.0.1 as admin
+2025-11-23 11:30:39 | INFO | Loaded admin credentials - Username: 'admin' (len: 5), Password: 'adm***' (len: 8)
+2025-11-23 11:30:50 | INFO | Loaded admin credentials - Username: 'admin' (len: 5), Password: 'adm***' (len: 8)
+2025-11-23 11:31:00 | INFO | Loaded admin credentials - Username: 'admin' (len: 5), Password: 'adm***' (len: 8)
+2025-11-23 11:31:32 | INFO | Login attempt - Username: 'admin' (expected: 'admin'), Match: True
+2025-11-23 11:31:32 | INFO | Password provided: 'admin123' (length: 8)
+2025-11-23 11:31:32 | INFO | Password expected: 'admin123' (length: 8)
+2025-11-23 11:31:32 | INFO | Password match: True
+2025-11-23 11:31:32 | INFO | Password bytes comparison: True
+2025-11-23 11:31:32 | INFO | Successful login from 127.0.0.1 as admin
+2025-11-23 11:31:40 | INFO | User logged out from 127.0.0.1
+2025-11-23 11:31:52 | INFO | Login attempt - Username: 'admin' (expected: 'admin'), Match: True
+2025-11-23 11:31:52 | INFO | Password provided: 'admin123' (length: 8)
+2025-11-23 11:31:52 | INFO | Password expected: 'admin123' (length: 8)
+2025-11-23 11:31:52 | INFO | Password match: True
+2025-11-23 11:31:52 | INFO | Password bytes comparison: True
+2025-11-23 11:31:52 | INFO | Successful login from 127.0.0.1 as admin
+2025-11-23 11:33:01 | INFO | Starting broadcast to 21 recipients (concurrency=50)
+2025-11-23 11:33:05 | INFO | Broadcast failed: (535, '5.7.8 Username and Password not accepted. For more information, go to\n5.7.8  https://support.google.com/mail/?p=BadCredentials a640c23a62f3a-b7654cefe53sm924738466b.13 - gsmtp')
+2025-11-23 11:33:42 | INFO | Loaded admin credentials - Username: 'admin' (len: 5), Password: 'adm***' (len: 8)
+2025-11-23 11:36:02 | INFO | Loaded admin credentials - Username: 'admin' (len: 5), Password: 'adm***' (len: 8)
+2025-11-23 11:36:11 | INFO | Loaded admin credentials - Username: 'admin' (len: 5), Password: 'adm***' (len: 8)
+2025-11-23 11:37:36 | INFO | Starting broadcast to 21 recipients (concurrency=50)
+2025-11-23 11:37:40 | ERROR | SMTP Authentication failed. Please check your SMTP credentials in .env file. For Gmail, you need an App Password (not your regular password). Get one at: https://myaccount.google.com/apppasswords
+2025-11-23 11:37:40 | ERROR | SMTP Authentication failed. Please check your SMTP credentials in .env file. For Gmail, you need an App Password (not your regular password). Get one at: https://myaccount.google.com/apppasswords
+2025-11-23 11:37:40 | INFO | Broadcast failed: (535, '5.7.8 Username and Password not accepted. For more information, go to\n5.7.8  https://support.google.com/mail/?p=BadCredentials a640c23a62f3a-b7654d56a88sm938241966b.23 - gsmtp')
+2025-11-23 11:38:17 | INFO | Recipients persisted to E:\email_broadcast_project\app\core\recipients.py (20 total)
+2025-11-23 11:38:17 | INFO | Removed recipient: hamza@gmail.com
+2025-11-23 11:38:19 | INFO | Loaded admin credentials - Username: 'admin' (len: 5), Password: 'adm***' (len: 8)
+2025-11-23 11:39:02 | INFO | Starting broadcast to 20 recipients (concurrency=24)
+2025-11-23 11:39:05 | ERROR | SMTP Authentication failed. Please check your SMTP credentials in .env file. For Gmail, you need an App Password (not your regular password). Get one at: https://myaccount.google.com/apppasswords
+2025-11-23 11:39:05 | ERROR | SMTP Authentication failed. Please check your SMTP credentials in .env file. For Gmail, you need an App Password (not your regular password). Get one at: https://myaccount.google.com/apppasswords
+2025-11-23 11:39:05 | ERROR | SMTP Authentication failed. Please check your SMTP credentials in .env file. For Gmail, you need an App Password (not your regular password). Get one at: https://myaccount.google.com/apppasswords
+2025-11-23 11:39:05 | INFO | Broadcast failed: (535, '5.7.8 Username and Password not accepted. For more information, go to\n5.7.8  https://support.google.com/mail/?p=BadCredentials 4fb4d7f45d1cf-6453645f2easm8550520a12.33 - gsmtp')
+2025-11-23 11:39:17 | INFO | Starting broadcast to 20 recipients (concurrency=24)
+2025-11-23 11:39:20 | ERROR | SMTP Authentication failed. Please check your SMTP credentials in .env file. For Gmail, you need an App Password (not your regular password). Get one at: https://myaccount.google.com/apppasswords
+2025-11-23 11:39:20 | INFO | Broadcast failed: (535, '5.7.8 Username and Password not accepted. For more information, go to\n5.7.8  https://support.google.com/mail/?p=BadCredentials a640c23a62f3a-b7654ff3987sm943295866b.48 - gsmtp')
+2025-11-23 11:41:58 | INFO | Loaded admin credentials - Username: 'admin' (len: 5), Password: 'adm***' (len: 8)
+2025-11-23 11:41:59 | INFO | Loaded admin credentials - Username: 'admin' (len: 5), Password: 'adm***' (len: 8)
+2025-11-23 11:42:12 | INFO | Starting broadcast to 20 recipients (concurrency=24)
+2025-11-23 11:42:15 | ERROR | SMTP Authentication failed. Please check your SMTP credentials in .env file. For Gmail, you need an App Password (not your regular password). Get one at: https://myaccount.google.com/apppasswords
+2025-11-23 11:42:15 | ERROR | SMTP Authentication failed. Please check your SMTP credentials in .env file. For Gmail, you need an App Password (not your regular password). Get one at: https://myaccount.google.com/apppasswords
+2025-11-23 11:42:16 | INFO | Broadcast failed: (535, '5.7.8 Username and Password not accepted. For more information, go to\n5.7.8  https://support.google.com/mail/?p=BadCredentials a640c23a62f3a-b76550512d2sm931348666b.67 - gsmtp')
+2025-11-23 11:42:18 | INFO | User logged out from 127.0.0.1
+2025-11-23 11:42:26 | INFO | Login attempt - Username: 'admin' (expected: 'admin'), Match: True
+2025-11-23 11:42:26 | INFO | Password provided: 'admin123' (length: 8)
+2025-11-23 11:42:26 | INFO | Password expected: 'admin123' (length: 8)
+2025-11-23 11:42:26 | INFO | Password match: True
+2025-11-23 11:42:26 | INFO | Password bytes comparison: True
+2025-11-23 11:42:26 | INFO | Successful login from 127.0.0.1 as admin
+2025-11-23 11:42:40 | INFO | Starting broadcast to 20 recipients (concurrency=50)
+2025-11-23 11:42:44 | ERROR | SMTP Authentication failed. Please check your SMTP credentials in .env file. For Gmail, you need an App Password (not your regular password). Get one at: https://myaccount.google.com/apppasswords
+2025-11-23 11:42:44 | INFO | Broadcast failed: (535, '5.7.8 Username and Password not accepted. For more information, go to\n5.7.8  https://support.google.com/mail/?p=BadCredentials a640c23a62f3a-b7654fd4f59sm909938666b.36 - gsmtp')
+2025-11-23 11:43:27 | INFO | Loaded admin credentials - Username: 'admin' (len: 5), Password: 'adm***' (len: 8)
+2025-11-23 11:43:38 | INFO | Loaded admin credentials - Username: 'admin' (len: 5), Password: 'adm***' (len: 8)
+2025-11-23 11:43:45 | INFO | Loaded admin credentials - Username: 'admin' (len: 5), Password: 'adm***' (len: 8)
+2025-11-23 11:43:55 | INFO | Loaded admin credentials - Username: 'admin' (len: 5), Password: 'adm***' (len: 8)
+2025-11-23 11:59:58 | INFO | Loaded admin credentials - Username: 'admin' (len: 5), Password: 'adm***' (len: 8)
+2025-11-23 11:59:59 | INFO | Loaded admin credentials - Username: 'admin' (len: 5), Password: 'adm***' (len: 8)
+2025-11-23 14:29:58 | INFO | Loaded admin credentials - Username: 'admin' (len: 5), Password: 'adm***' (len: 8)
+2025-11-23 14:29:59 | INFO | Loaded admin credentials - Username: 'admin' (len: 5), Password: 'adm***' (len: 8)
+2025-11-23 14:30:51 | INFO | Login attempt - Username: 'admin' (expected: 'admin'), Match: True
+2025-11-23 14:30:51 | INFO | Password provided: 'admin123' (length: 8)
+2025-11-23 14:30:51 | INFO | Password expected: 'admin123' (length: 8)
+2025-11-23 14:30:51 | INFO | Password match: True
+2025-11-23 14:30:51 | INFO | Password bytes comparison: True
+2025-11-23 14:30:51 | INFO | Successful login from 172.25.141.78 as admin
+2025-11-23 14:42:20 | INFO | Login attempt - Username: 'admin' (expected: 'admin'), Match: True
+2025-11-23 14:42:20 | INFO | Password provided: 'admin123' (length: 8)
+2025-11-23 14:42:20 | INFO | Password expected: 'admin123' (length: 8)
+2025-11-23 14:42:20 | INFO | Password match: True
+2025-11-23 14:42:20 | INFO | Password bytes comparison: True
+2025-11-23 14:42:20 | INFO | Successful login from 127.0.0.1 as admin
+2025-11-23 14:43:28 | INFO | Loaded admin credentials - Username: 'admin' (len: 5), Password: 'adm***' (len: 8)
+2025-11-23 14:43:30 | INFO | Loaded admin credentials - Username: 'admin' (len: 5), Password: 'adm***' (len: 8)
+2025-11-23 14:45:14 | INFO | Recipients persisted to E:\email_broadcast_project\app\core\recipients.py (19 total)
+2025-11-23 14:45:14 | INFO | Removed recipient: tango@example.com
+2025-11-23 14:45:15 | INFO | Loaded admin credentials - Username: 'admin' (len: 5), Password: 'adm***' (len: 8)
+2025-11-23 14:45:15 | INFO | Loaded admin credentials - Username: 'admin' (len: 5), Password: 'adm***' (len: 8)
+2025-11-23 14:45:17 | INFO | Recipients persisted to E:\email_broadcast_project\app\core\recipients.py (0 total)
+2025-11-23 14:45:17 | INFO | Cleared all 19 recipients
+2025-11-23 14:45:19 | INFO | Loaded admin credentials - Username: 'admin' (len: 5), Password: 'adm***' (len: 8)
+2025-11-23 14:45:20 | INFO | Loaded admin credentials - Username: 'admin' (len: 5), Password: 'adm***' (len: 8)
+2025-11-23 14:45:38 | INFO | Recipients persisted to E:\email_broadcast_project\app\core\recipients.py (1 total)
+2025-11-23 14:45:38 | INFO | Added 1 new recipients. Total: 1
+2025-11-23 14:45:40 | INFO | Loaded admin credentials - Username: 'admin' (len: 5), Password: 'adm***' (len: 8)
+2025-11-23 14:45:40 | INFO | Loaded admin credentials - Username: 'admin' (len: 5), Password: 'adm***' (len: 8)
+2025-11-23 14:45:56 | INFO | Starting broadcast to 1 recipients (concurrency=1)
+2025-11-23 14:46:00 | INFO | Delivered to meerhamzagujjar6@gmail.com
+2025-11-23 14:46:00 | INFO | Broadcast completed.
+2025-11-23 14:46:00 | INFO | Broadcast sent: subject='Broadcast Studio Demo' to 1 recipients
+2025-11-23 14:47:01 | INFO | Recipients persisted to E:\email_broadcast_project\app\core\recipients.py (2 total)
+2025-11-23 14:47:01 | INFO | Added 1 new recipients. Total: 2
+2025-11-23 14:47:02 | INFO | Loaded admin credentials - Username: 'admin' (len: 5), Password: 'adm***' (len: 8)
+2025-11-23 14:47:03 | INFO | Loaded admin credentials - Username: 'admin' (len: 5), Password: 'adm***' (len: 8)
+2025-11-23 14:47:51 | INFO | Starting broadcast to 2 recipients (concurrency=2)
+2025-11-23 14:47:55 | INFO | Delivered to hamzaiqbalrajpoot35@gmail.com
+2025-11-23 14:47:55 | INFO | Delivered to meerhamzagujjar6@gmail.com
+2025-11-23 14:47:55 | INFO | Broadcast completed.
+2025-11-23 14:47:55 | INFO | Broadcast sent: subject='my name is meer hamza this is my new python ptoject' to 2 recipients
+2025-12-11 10:58:50 | INFO | Loaded admin credentials - Username: 'admin' (len: 5), Password: 'adm***' (len: 8)
+2025-12-11 10:58:51 | INFO | Loaded admin credentials - Username: 'admin' (len: 5), Password: 'adm***' (len: 8)
+2025-12-11 10:59:16 | INFO | Login attempt - Username: 'admin' (expected: 'admin'), Match: True
+2025-12-11 10:59:16 | INFO | Password provided: 'admin123' (length: 8)
+2025-12-11 10:59:16 | INFO | Password expected: 'admin123' (length: 8)
+2025-12-11 10:59:16 | INFO | Password match: True
+2025-12-11 10:59:16 | INFO | Password bytes comparison: True
+2025-12-11 10:59:16 | INFO | Successful login from 127.0.0.1 as admin
+2025-12-11 10:59:25 | INFO | User logged out from 127.0.0.1
+2025-12-11 10:59:38 | INFO | Login attempt - Username: 'admin' (expected: 'admin'), Match: True
+2025-12-11 10:59:38 | INFO | Password provided: 'admin123' (length: 8)
+2025-12-11 10:59:38 | INFO | Password expected: 'admin123' (length: 8)
+2025-12-11 10:59:38 | INFO | Password match: True
+2025-12-11 10:59:38 | INFO | Password bytes comparison: True
+2025-12-11 10:59:38 | INFO | Successful login from 127.0.0.1 as admin
+2025-12-11 10:59:50 | INFO | Starting broadcast to 2 recipients (concurrency=50)
+2025-12-11 10:59:53 | INFO | Delivered to meerhamzagujjar6@gmail.com
+2025-12-11 10:59:54 | INFO | Delivered to hamzaiqbalrajpoot35@gmail.com
+2025-12-11 10:59:54 | INFO | Broadcast completed.
+2025-12-11 10:59:54 | INFO | Broadcast sent: subject='Broadcast Studio Demo' to 2 recipients
+2025-12-11 11:00:20 | INFO | Recipients persisted to E:\ApexcifyTechnology_email_broadcast_project\app\core\recipients.py (3 total)
+2025-12-11 11:00:20 | INFO | Added 1 new recipients. Total: 3
+2025-12-11 11:00:21 | INFO | Loaded admin credentials - Username: 'admin' (len: 5), Password: 'adm***' (len: 8)
+2025-12-11 11:00:26 | INFO | Recipients persisted to E:\ApexcifyTechnology_email_broadcast_project\app\core\recipients.py (2 total)
+2025-12-11 11:00:26 | INFO | Removed recipient: gumeer6@gmail.com
+2025-12-11 11:00:27 | INFO | Loaded admin credentials - Username: 'admin' (len: 5), Password: 'adm***' (len: 8)

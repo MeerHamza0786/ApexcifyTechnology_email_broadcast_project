@@ -1,0 +1,310 @@
+{% extends "base.html" %}
+
+{% block title %}Dashboard · Broadcast Studio{% endblock %}
+
+{% block content %}
+<section class="dashboard-section">
+    <!-- Page Header -->
+    <div class="section-header">
+        <div class="header-content">
+            <h1 class="section-title">Dashboard</h1>
+            <p class="section-subtitle">Monitor your email broadcast activities and system status</p>
+        </div>
+        <div class="header-actions">
+            <button class="btn btn-outline" onclick="location.reload()">
+                <span class="btn-icon">🔄</span> Refresh
+            </button>
+            <a href="{{ url_for('compose') }}" class="btn btn-primary">
+                <span class="btn-icon">✉️</span> New Broadcast
+            </a>
+        </div>
+    </div>
+
+    <!-- Statistics Overview -->
+    <div class="stats-grid">
+        <div class="stat-card stat-primary">
+            <div class="stat-icon">👥</div>
+            <div class="stat-content">
+                <h3 class="stat-value">{{ recipients_count }}</h3>
+                <p class="stat-label">Total Recipients</p>
+            </div>
+            <a href="{{ url_for('recipients') }}" class="stat-link">
+                View All <span class="link-arrow">→</span>
+            </a>
+        </div>
+
+        <div class="stat-card stat-success">
+            <div class="stat-icon">📤</div>
+            <div class="stat-content">
+                <h3 class="stat-value" id="sentCount">-</h3>
+                <p class="stat-label">Emails Sent Today</p>
+            </div>
+        </div>
+
+        <div class="stat-card stat-info">
+            <div class="stat-icon">📊</div>
+            <div class="stat-content">
+                <h3 class="stat-value" id="openRate">-</h3>
+                <p class="stat-label">Open Rate</p>
+            </div>
+        </div>
+
+        <div class="stat-card stat-warning">
+            <div class="stat-icon">⏱️</div>
+            <div class="stat-content">
+                <h3 class="stat-value" id="queueStatus">Active</h3>
+                <p class="stat-label">Queue Status</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Recipients Section -->
+    <div class="card recipients-card">
+        <div class="card-header">
+            <div class="card-title-group">
+                <h2 class="card-title">
+                    <span class="title-icon">📋</span> Recipients Overview
+                </h2>
+                <span class="badge badge-info">{{ recipients|length }} loaded</span>
+            </div>
+            <div class="card-actions">
+                <button class="btn btn-sm btn-outline" id="exportBtn">
+                    <span class="btn-icon">💾</span> Export
+                </button>
+                <a href="{{ url_for('recipients') }}" class="btn btn-sm btn-primary">
+                    <span class="btn-icon">+</span> Add Recipient
+                </a>
+            </div>
+        </div>
+
+        <div class="card-body">
+            {% if recipients|length > 0 %}
+                <div class="recipients-list">
+                    <div class="list-header">
+                        <span class="list-header-text">Email Address</span>
+                        <span class="list-header-count">Showing {{ [recipients|length, 30]|min }} of {{ recipients_count }}</span>
+                    </div>
+                    <ul class="email-list">
+                        {% for r in recipients[:30] %}
+                            <li class="email-item">
+                                <span class="email-icon">✉️</span>
+                                <span class="email-address">{{ r }}</span>
+                                <span class="email-status status-active">Active</span>
+                            </li>
+                        {% endfor %}
+                    </ul>
+                    {% if recipients|length > 30 %}
+                        <div class="list-footer">
+                            <a href="{{ url_for('recipients') }}" class="btn btn-text">
+                                View all {{ recipients_count }} recipients <span class="link-arrow">→</span>
+                            </a>
+                        </div>
+                    {% endif %}
+                </div>
+            {% else %}
+                <div class="empty-state">
+                    <div class="empty-icon">📭</div>
+                    <h3 class="empty-title">No Recipients Yet</h3>
+                    <p class="empty-text">Start building your email list by adding recipients.</p>
+                    <a href="{{ url_for('recipients') }}" class="btn btn-primary">
+                        <span class="btn-icon">+</span> Add Your First Recipient
+                    </a>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+
+    <!-- Activity Logs Section -->
+    <div class="card logs-card">
+        <div class="card-header">
+            <div class="card-title-group">
+                <h2 class="card-title">
+                    <span class="title-icon">📝</span> Recent Activity Logs
+                </h2>
+                <span class="badge badge-success">Live</span>
+            </div>
+            <div class="card-actions">
+                <div class="log-controls">
+                    <button class="btn btn-sm btn-outline" id="clearLogsBtn">
+                        <span class="btn-icon">🗑️</span> Clear
+                    </button>
+                    <button class="btn btn-sm btn-outline" id="downloadLogsBtn">
+                        <span class="btn-icon">⬇️</span> Download
+                    </button>
+                    <label class="toggle-switch">
+                        <input type="checkbox" id="autoScrollToggle" checked>
+                        <span class="toggle-slider"></span>
+                        <span class="toggle-label">Auto-scroll</span>
+                    </label>
+                </div>
+            </div>
+        </div>
+
+        <div class="card-body">
+            {% if logs %}
+                <div class="log-viewer" id="logViewer">
+                    <pre class="log-content" id="logContent">{% for line in logs %}{{ line.strip() }}
+{% endfor %}</pre>
+                </div>
+                <div class="log-footer">
+                    <span class="log-info">
+                        <span class="info-icon">ℹ️</span> 
+                        Showing {{ logs|length }} recent log entries
+                    </span>
+                    <span class="log-timestamp" id="lastUpdated">Last updated: Just now</span>
+                </div>
+            {% else %}
+                <div class="empty-state empty-state-sm">
+                    <div class="empty-icon">📄</div>
+                    <p class="empty-text">No activity logs available yet.</p>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+
+    <!-- Quick Actions Panel -->
+    <div class="quick-actions-panel">
+        <h3 class="panel-title">Quick Actions</h3>
+        <div class="actions-grid">
+            <a href="{{ url_for('compose') }}" class="action-card">
+                <div class="action-icon">✉️</div>
+                <div class="action-content">
+                    <h4 class="action-title">Compose Email</h4>
+                    <p class="action-desc">Create a new broadcast</p>
+                </div>
+            </a>
+            <a href="{{ url_for('recipients') }}" class="action-card">
+                <div class="action-icon">👥</div>
+                <div class="action-content">
+                    <h4 class="action-title">Manage Recipients</h4>
+                    <p class="action-desc">Add or remove recipients</p>
+                </div>
+            </a>
+            <button class="action-card" onclick="location.reload()">
+                <div class="action-icon">📊</div>
+                <div class="action-content">
+                    <h4 class="action-title">View Reports</h4>
+                    <p class="action-desc">Check campaign analytics</p>
+                </div>
+            </button>
+        </div>
+    </div>
+</section>
+
+<script>
+    // Auto-scroll logs functionality
+    const logViewer = document.getElementById('logViewer');
+    const autoScrollToggle = document.getElementById('autoScrollToggle');
+    
+    if (logViewer && autoScrollToggle) {
+        function scrollToBottom() {
+            if (autoScrollToggle.checked) {
+                logViewer.scrollTop = logViewer.scrollHeight;
+            }
+        }
+        
+        // Initial scroll
+        scrollToBottom();
+        
+        // Monitor for changes (if logs update dynamically)
+        const observer = new MutationObserver(scrollToBottom);
+        observer.observe(logViewer, { childList: true, subtree: true });
+    }
+
+    // Download logs functionality
+    const downloadLogsBtn = document.getElementById('downloadLogsBtn');
+    if (downloadLogsBtn) {
+        downloadLogsBtn.addEventListener('click', function() {
+            const logContent = document.getElementById('logContent').textContent;
+            const blob = new Blob([logContent], { type: 'text/plain' });
+            const url = window.URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `broadcast-logs-${new Date().toISOString().split('T')[0]}.txt`;
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            window.URL.revokeObjectURL(url);
+        });
+    }
+
+    // Clear logs functionality
+    const clearLogsBtn = document.getElementById('clearLogsBtn');
+    if (clearLogsBtn) {
+        clearLogsBtn.addEventListener('click', function() {
+            if (confirm('Are you sure you want to clear the logs display?')) {
+                document.getElementById('logContent').textContent = '';
+            }
+        });
+    }
+
+    // Export recipients functionality
+    const exportBtn = document.getElementById('exportBtn');
+    if (exportBtn) {
+        exportBtn.addEventListener('click', function() {
+            const recipients = [
+                {% for r in recipients %}
+                '{{ r }}'{% if not loop.last %},{% endif %}
+                {% endfor %}
+            ];
+            const csv = 'Email Address\n' + recipients.join('\n');
+            const blob = new Blob([csv], { type: 'text/csv' });
+            const url = window.URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `recipients-${new Date().toISOString().split('T')[0]}.csv`;
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            window.URL.revokeObjectURL(url);
+        });
+    }
+
+    // Update timestamp
+    function updateTimestamp() {
+        const now = new Date();
+        const timeString = now.toLocaleTimeString();
+        const lastUpdated = document.getElementById('lastUpdated');
+        if (lastUpdated) {
+            lastUpdated.textContent = `Last updated: ${timeString}`;
+        }
+    }
+    
+    // Update every minute
+    setInterval(updateTimestamp, 60000);
+
+    // Simulate stats (replace with actual data from backend)
+    document.addEventListener('DOMContentLoaded', function() {
+        // These would normally come from your backend
+        setTimeout(() => {
+            document.getElementById('sentCount').textContent = '0';
+            document.getElementById('openRate').textContent = '-%';
+        }, 100);
+    });
+
+    // Search/filter functionality for recipients
+    function filterRecipients(searchTerm) {
+        const items = document.querySelectorAll('.email-item');
+        items.forEach(item => {
+            const email = item.querySelector('.email-address').textContent.toLowerCase();
+            if (email.includes(searchTerm.toLowerCase())) {
+                item.style.display = '';
+            } else {
+                item.style.display = 'none';
+            }
+        });
+    }
+
+    // Log level highlighting
+    const logContent = document.getElementById('logContent');
+    if (logContent) {
+        const logText = logContent.innerHTML;
+        const highlighted = logText
+            .replace(/\[ERROR\]/g, '<span class="log-error">[ERROR]</span>')
+            .replace(/\[WARNING\]/g, '<span class="log-warning">[WARNING]</span>')
+            .replace(/\[INFO\]/g, '<span class="log-info">[INFO]</span>')
+            .replace(/\[SUCCESS\]/g, '<span class="log-success">[SUCCESS]</span>');
+        logContent.innerHTML = highlighted;
+    }
+</script>
+{% endblock %}

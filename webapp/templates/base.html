@@ -1,0 +1,88 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content="Email Broadcast Control Center" />
+    <title>{% block title %}{{ app_name }}{% endblock %}</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <header class="topbar" role="banner">
+        <div class="brand">
+            <div class="logo" aria-hidden="true">📧</div>
+            <div class="brand-copy">
+                <span class="brand-title">{{ app_name }}</span>
+                <span class="brand-tagline">Async email operations dashboard</span>
+            </div>
+        </div>
+        {% if logged_in %}
+        <nav class="primary-nav" aria-label="Main navigation">
+            <a class="nav-link" href="{{ url_for('dashboard') }}">Dashboard</a>
+            <a class="nav-link" href="{{ url_for('recipients') }}">Recipients</a>
+            <a class="nav-link" href="{{ url_for('compose') }}">Compose</a>
+            <a class="nav-link logout" href="{{ url_for('logout') }}">Logout</a>
+        </nav>
+        {% else %}
+        <div class="primary-nav">
+            <a class="nav-link" href="{{ url_for('login') }}">Login</a>
+        </div>
+        {% endif %}
+    </header>
+
+    <main class="container" role="main">
+        {% with messages = get_flashed_messages(with_categories=True) %}
+            {% if messages %}
+                <div class="flash-area" role="alert" aria-live="polite">
+                    {% for category, msg in messages %}
+                        <div class="flash flash-{{ category }}">
+                            <div class="flash-icon" aria-hidden="true">
+                                {% if category == 'success' %}✓{% elif category == 'danger' %}✗{% elif category == 'warning' %}⚠{% else %}ℹ{% endif %}
+                            </div>
+                            <div class="flash-message">{{ msg }}</div>
+                            <button class="flash-close" aria-label="Dismiss notification">&times;</button>
+                        </div>
+                    {% endfor %}
+                </div>
+            {% endif %}
+        {% endwith %}
+
+        {% block content %}{% endblock %}
+    </main>
+
+    <footer class="footer" role="contentinfo">
+        <p>© {{ current_year }} {{ app_name }}. All rights reserved.</p>
+        <div class="footer-links">
+            <a href="mailto:support@example.com">Support</a>
+            <a href="#privacy">Privacy</a>
+            <a href="#terms">Terms</a>
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            document.querySelectorAll('.flash-close').forEach((btn) => {
+                btn.addEventListener('click', () => {
+                    const toast = btn.closest('.flash');
+                    toast?.classList.add('flash-hide');
+                    setTimeout(() => toast?.remove(), 300);
+                });
+            });
+
+            setTimeout(() => {
+                document.querySelectorAll('.flash').forEach((flash) => {
+                    flash.classList.add('flash-hide');
+                    setTimeout(() => flash.remove(), 300);
+                });
+            }, 5000);
+
+            const currentPath = window.location.pathname;
+            document.querySelectorAll('.nav-link').forEach((link) => {
+                if (link.getAttribute('href') === currentPath) {
+                    link.classList.add('active');
+                }
+            });
+        });
+    </script>
+</body>
+</html>

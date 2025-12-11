@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+
+{% block title %}Not Found · {{ app_name }}{% endblock %}
+
+{% block content %}
+<section class="card empty-state">
+    <div class="empty-icon">🔎</div>
+    <h1>Page not found</h1>
+    <p>The page you requested could not be located. Use the navigation to return to safety.</p>
+    <a class="btn btn-primary" href="{{ url_for('dashboard') }}">Back to dashboard</a>
+</section>
+{% endblock %}
+

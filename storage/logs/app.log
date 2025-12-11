@@ -1,0 +1,54 @@
+2025-12-11 10:58:50,672 - __main__ - INFO - Running preflight checks...
+2025-12-11 10:58:50,672 - __main__ - INFO -   → Validating dependencies...
+2025-12-11 10:58:50,673 - __main__ - INFO -   ✓ Validating dependencies passed
+2025-12-11 10:58:50,673 - __main__ - INFO -   → Setting up directories...
+2025-12-11 10:58:50,674 - __main__ - INFO -   ✓ Setting up directories passed
+2025-12-11 10:58:50,675 - __main__ - INFO -   → Checking environment...
+2025-12-11 10:58:50,675 - __main__ - WARNING - ⚠️  Running in DEBUG mode - DO NOT use in production!
+2025-12-11 10:58:50,676 - __main__ - INFO -   ✓ Checking environment passed
+2025-12-11 10:58:50,676 - __main__ - INFO - All preflight checks passed!
+2025-12-11 10:58:50,680 - __main__ - INFO - Application started successfully
+2025-12-11 10:58:51,504 - __main__ - INFO - Running preflight checks...
+2025-12-11 10:58:51,504 - __main__ - INFO -   → Validating dependencies...
+2025-12-11 10:58:51,505 - __main__ - INFO -   ✓ Validating dependencies passed
+2025-12-11 10:58:51,505 - __main__ - INFO -   → Setting up directories...
+2025-12-11 10:58:51,507 - __main__ - INFO -   ✓ Setting up directories passed
+2025-12-11 10:58:51,507 - __main__ - INFO -   → Checking environment...
+2025-12-11 10:58:51,508 - __main__ - WARNING - ⚠️  Running in DEBUG mode - DO NOT use in production!
+2025-12-11 10:58:51,508 - __main__ - INFO -   ✓ Checking environment passed
+2025-12-11 10:58:51,509 - __main__ - INFO - All preflight checks passed!
+2025-12-11 10:58:51,526 - __main__ - INFO - Application started successfully
+2025-12-11 10:58:51,592 - werkzeug - WARNING -  * Debugger is active!
+2025-12-11 10:59:16,367 - broadcast - INFO - Login attempt - Username: 'admin' (expected: 'admin'), Match: True
+2025-12-11 10:59:16,369 - broadcast - INFO - Password provided: 'admin123' (length: 8)
+2025-12-11 10:59:16,373 - broadcast - INFO - Password expected: 'admin123' (length: 8)
+2025-12-11 10:59:16,374 - broadcast - INFO - Password match: True
+2025-12-11 10:59:16,376 - broadcast - INFO - Password bytes comparison: True
+2025-12-11 10:59:16,378 - broadcast - INFO - Successful login from 127.0.0.1 as admin
+2025-12-11 10:59:25,666 - broadcast - INFO - User logged out from 127.0.0.1
+2025-12-11 10:59:38,163 - broadcast - INFO - Login attempt - Username: 'admin' (expected: 'admin'), Match: True
+2025-12-11 10:59:38,164 - broadcast - INFO - Password provided: 'admin123' (length: 8)
+2025-12-11 10:59:38,164 - broadcast - INFO - Password expected: 'admin123' (length: 8)
+2025-12-11 10:59:38,166 - broadcast - INFO - Password match: True
+2025-12-11 10:59:38,167 - broadcast - INFO - Password bytes comparison: True
+2025-12-11 10:59:38,169 - broadcast - INFO - Successful login from 127.0.0.1 as admin
+2025-12-11 10:59:50,124 - app.services.mailer - INFO - Starting broadcast to 2 recipients (concurrency=50)
+2025-12-11 10:59:53,862 - app.services.mailer - INFO - Delivered to meerhamzagujjar6@gmail.com
+2025-12-11 10:59:54,205 - app.services.mailer - INFO - Delivered to hamzaiqbalrajpoot35@gmail.com
+2025-12-11 10:59:54,206 - app.services.mailer - INFO - Broadcast completed.
+2025-12-11 10:59:54,210 - broadcast - INFO - Broadcast sent: subject='Broadcast Studio Demo' to 2 recipients
+2025-12-11 11:00:20,679 - broadcast - INFO - Recipients persisted to E:\ApexcifyTechnology_email_broadcast_project\app\core\recipients.py (3 total)
+2025-12-11 11:00:20,682 - broadcast - INFO - Added 1 new recipients. Total: 3
+2025-12-11 11:00:21,710 - __main__ - INFO - Running preflight checks...
+2025-12-11 11:00:21,711 - __main__ - INFO -   → Validating dependencies...
+2025-12-11 11:00:21,711 - __main__ - INFO -   ✓ Validating dependencies passed
+2025-12-11 11:00:21,711 - __main__ - INFO -   → Setting up directories...
+2025-12-11 11:00:21,712 - __main__ - INFO -   ✓ Setting up directories passed
+2025-12-11 11:00:21,713 - __main__ - INFO -   → Checking environment...
+2025-12-11 11:00:21,713 - __main__ - WARNING - ⚠️  Running in DEBUG mode - DO NOT use in production!
+2025-12-11 11:00:21,714 - __main__ - INFO -   ✓ Checking environment passed
+2025-12-11 11:00:21,714 - __main__ - INFO - All preflight checks passed!
+2025-12-11 11:00:21,717 - __main__ - INFO - Application started successfully
+2025-12-11 11:00:21,780 - werkzeug - WARNING -  * Debugger is active!
+2025-12-11 11:00:26,692 - broadcast - INFO - Recipients persisted to E:\ApexcifyTechnology_email_broadcast_project\app\core\recipients.py (2 total)
+2025-12-11 11:00:26,695 - broadcast - INFO - Removed recipient: gumeer6@gmail.com

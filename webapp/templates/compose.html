@@ -1,0 +1,267 @@
+{% extends "base.html" %}
+
+{% block title %}Compose · Broadcast Studio{% endblock %}
+
+{% block content %}
+<section class="compose-section">
+    <div class="section-header">
+        <h1 class="section-title">Compose Broadcast</h1>
+        <p class="section-subtitle">Create and send email campaigns to your recipients</p>
+    </div>
+
+    <div class="card compose-card">
+        <form method="post" class="compose-form" id="composeForm" novalidate>
+            <!-- Subject Field -->
+            <div class="form-group {% if form.errors.get('subject') %}has-error{% endif %}">
+                <label for="subject" class="form-label">
+                    <span class="label-text">Subject Line</span>
+                    <span class="label-required">*</span>
+                </label>
+                <div class="input-wrapper">
+                    <span class="input-icon">📝</span>
+                    <input 
+                        type="text" 
+                        id="subject" 
+                        name="subject" 
+                        class="form-control" 
+                        value="{{ form.subject or '' }}" 
+                        placeholder="Enter your email subject..."
+                        maxlength="200"
+                        required
+                        aria-describedby="subject-error subject-hint"
+                    />
+                </div>
+                <small id="subject-hint" class="form-hint">Keep it clear and concise (max 200 characters)</small>
+                {% if form.errors.get("subject") %}
+                    <small id="subject-error" class="form-error" role="alert">
+                        <span class="error-icon">⚠</span> {{ form.errors["subject"] }}
+                    </small>
+                {% endif %}
+            </div>
+
+            <!-- Message Body Field -->
+            <div class="form-group {% if form.errors.get('body') %}has-error{% endif %}">
+                <label for="body" class="form-label">
+                    <span class="label-text">Message Body</span>
+                    <span class="label-required">*</span>
+                </label>
+                <textarea 
+                    id="body" 
+                    name="body" 
+                    class="form-control textarea-control" 
+                    rows="12"
+                    placeholder="Write your email message here...&#10;&#10;You can use plain text or HTML formatting."
+                    required
+                    aria-describedby="body-error body-hint"
+                >{{ form.body or '' }}</textarea>
+                <div class="textarea-toolbar">
+                    <small id="body-hint" class="form-hint">
+                        <span class="hint-icon">💡</span> Tip: Personalize with recipient variables
+                    </small>
+                    <span class="character-count" id="charCount">0 characters</span>
+                </div>
+                {% if form.errors.get("body") %}
+                    <small id="body-error" class="form-error" role="alert">
+                        <span class="error-icon">⚠</span> {{ form.errors["body"] }}
+                    </small>
+                {% endif %}
+            </div>
+
+            <!-- Concurrency Field -->
+            <div class="form-group form-group-inline {% if form.errors.get('concurrency') %}has-error{% endif %}">
+                <label for="concurrency" class="form-label">
+                    <span class="label-text">Sending Concurrency</span>
+                    <span class="label-optional">Optional</span>
+                </label>
+                <div class="input-group">
+                    <div class="input-wrapper input-wrapper-number">
+                        <span class="input-icon">⚡</span>
+                        <input 
+                            type="number" 
+                            id="concurrency" 
+                            name="concurrency" 
+                            class="form-control" 
+                            value="{{ form.concurrency or 10 }}" 
+                            min="1" 
+                            max="500"
+                            aria-describedby="concurrency-error concurrency-hint"
+                        />
+                    </div>
+                    <span class="input-suffix">emails/batch</span>
+                </div>
+                <small id="concurrency-hint" class="form-hint">Number of emails to send simultaneously (1-500)</small>
+                {% if form.errors.get("concurrency") %}
+                    <small id="concurrency-error" class="form-error" role="alert">
+                        <span class="error-icon">⚠</span> {{ form.errors["concurrency"] }}
+                    </small>
+                {% endif %}
+            </div>
+
+            <!-- Recipient Preview -->
+            <div class="recipient-preview">
+                <div class="preview-header">
+                    <span class="preview-icon">👥</span>
+                    <h3 class="preview-title">Recipient Summary</h3>
+                </div>
+                <div class="preview-content">
+                    <div class="preview-stat">
+                        <span class="stat-value">{{ recipients|length }}</span>
+                        <span class="stat-label">Total Recipients</span>
+                    </div>
+                    <div class="preview-actions">
+                        <a href="{{ url_for('recipients') }}" class="link-button">
+                            <span class="link-icon">👁️</span> View Recipients
+                        </a>
+                    </div>
+                </div>
+                {% if recipients|length == 0 %}
+                    <div class="preview-warning">
+                        <span class="warning-icon">⚠️</span>
+                        <p>No recipients found. Please <a href="{{ url_for('recipients') }}">add recipients</a> before sending.</p>
+                    </div>
+                {% endif %}
+            </div>
+
+            <!-- Form Actions -->
+            <div class="form-actions">
+                <button type="button" class="btn btn-secondary" onclick="history.back()">
+                    <span class="btn-icon">←</span> Cancel
+                </button>
+                <div class="action-group">
+                    <button type="button" class="btn btn-outline" id="previewBtn">
+                        <span class="btn-icon">👁️</span> Preview
+                    </button>
+                    <button 
+                        type="submit" 
+                        class="btn btn-primary" 
+                        {% if recipients|length == 0 %}disabled{% endif %}
+                    >
+                        <span class="btn-icon">📤</span> Queue Broadcast
+                    </button>
+                </div>
+            </div>
+        </form>
+    </div>
+
+    <!-- Help Section -->
+    <div class="help-card">
+        <h3 class="help-title">📚 Quick Tips</h3>
+        <ul class="help-list">
+            <li><strong>Subject Line:</strong> Keep it under 50 characters for better open rates</li>
+            <li><strong>Message Body:</strong> Use clear, concise language and include a call-to-action</li>
+            <li><strong>Concurrency:</strong> Higher values send faster but may trigger spam filters</li>
+            <li><strong>Testing:</strong> Always preview your email before sending</li>
+        </ul>
+    </div>
+</section>
+
+<script>
+    // Character counter for message body
+    const bodyTextarea = document.getElementById('body');
+    const charCount = document.getElementById('charCount');
+    
+    function updateCharCount() {
+        const count = bodyTextarea.value.length;
+        charCount.textContent = `${count.toLocaleString()} characters`;
+    }
+    
+    bodyTextarea.addEventListener('input', updateCharCount);
+    updateCharCount();
+
+    // Form validation
+    const form = document.getElementById('composeForm');
+    
+    form.addEventListener('submit', function(e) {
+        const subject = document.getElementById('subject').value.trim();
+        const body = bodyTextarea.value.trim();
+        
+        if (!subject || !body) {
+            e.preventDefault();
+            alert('Please fill in all required fields.');
+            return false;
+        }
+        
+        if ({{ recipients|length }} === 0) {
+            e.preventDefault();
+            alert('Please add recipients before sending a broadcast.');
+            return false;
+        }
+        
+        // Confirmation dialog
+        const confirmed = confirm(
+            `You are about to queue a broadcast to {{ recipients|length }} recipient(s).\n\n` +
+            `Subject: ${subject}\n\n` +
+            `Are you sure you want to proceed?`
+        );
+        
+        if (!confirmed) {
+            e.preventDefault();
+            return false;
+        }
+    });
+
+    // Preview functionality
+    document.getElementById('previewBtn').addEventListener('click', function() {
+        const subject = document.getElementById('subject').value;
+        const body = bodyTextarea.value;
+        
+        if (!subject || !body) {
+            alert('Please fill in subject and message body to preview.');
+            return;
+        }
+        
+        // Open preview in new window
+        const previewWindow = window.open('', 'Email Preview', 'width=600,height=800');
+        previewWindow.document.write(`
+            <!DOCTYPE html>
+            <html>
+            <head>
+                <title>Email Preview</title>
+                <style>
+                    body { font-family: Arial, sans-serif; padding: 20px; line-height: 1.6; }
+                    .preview-header { background: #f5f5f5; padding: 15px; border-radius: 5px; margin-bottom: 20px; }
+                    .preview-subject { font-size: 18px; font-weight: bold; margin-bottom: 10px; }
+                    .preview-meta { color: #666; font-size: 14px; }
+                    .preview-body { border: 1px solid #ddd; padding: 20px; border-radius: 5px; white-space: pre-wrap; }
+                </style>
+            </head>
+            <body>
+                <div class="preview-header">
+                    <div class="preview-subject">Subject: ${subject}</div>
+                    <div class="preview-meta">To: {{ recipients|length }} recipient(s)</div>
+                </div>
+                <div class="preview-body">${body}</div>
+            </body>
+            </html>
+        `);
+    });
+
+    // Auto-save to localStorage
+    let saveTimeout;
+    function autoSave() {
+        clearTimeout(saveTimeout);
+        saveTimeout = setTimeout(() => {
+            localStorage.setItem('draft_subject', document.getElementById('subject').value);
+            localStorage.setItem('draft_body', bodyTextarea.value);
+            localStorage.setItem('draft_concurrency', document.getElementById('concurrency').value);
+        }, 1000);
+    }
+    
+    document.getElementById('subject').addEventListener('input', autoSave);
+    bodyTextarea.addEventListener('input', autoSave);
+    document.getElementById('concurrency').addEventListener('input', autoSave);
+    
+    // Restore draft on load
+    window.addEventListener('load', () => {
+        if (!document.getElementById('subject').value) {
+            const draftSubject = localStorage.getItem('draft_subject');
+            if (draftSubject) document.getElementById('subject').value = draftSubject;
+        }
+        if (!bodyTextarea.value) {
+            const draftBody = localStorage.getItem('draft_body');
+            if (draftBody) bodyTextarea.value = draftBody;
+        }
+        updateCharCount();
+    });
+</script>
+{% endblock %}
